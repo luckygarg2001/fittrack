@@ -7,7 +7,7 @@ export default function PlanEditor() {
   const plans = useLiveQuery(() => db.workoutPlans.toArray());
   const activePlan = plans?.find(p => p.active);
   const days = useLiveQuery(() => 
-    db.workoutDays.where({ planId: activePlan?.id || -1 }).sortBy('dayOfWeek')
+    db.workoutDays.where('planId').equals(activePlan?.id || -1).sortBy('dayOfWeek')
   );
 
   const [expandedDay, setExpandedDay] = useState<string | null>(null);
@@ -35,7 +35,7 @@ export default function PlanEditor() {
 
 function DayEditor({ day, isExpanded, onToggle }: { day: WorkoutDay, isExpanded: boolean, onToggle: () => void }) {
   const exercises = useLiveQuery(() => 
-    db.exercises.where({ dayId: day.id }).sortBy('order')
+    db.exercises.where('dayId').equals(day.id).sortBy('order')
   );
   
   const [editingEx, setEditingEx] = useState<Exercise | null>(null);

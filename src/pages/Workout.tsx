@@ -14,11 +14,11 @@ export default function Workout() {
   const todayStr = new Date().toISOString().split('T')[0];
 
   const exercises = useLiveQuery(() => 
-    db.exercises.where({ dayId: dayId || '' }).sortBy('order')
+    db.exercises.where('dayId').equals(dayId || '').sortBy('order')
   );
 
   const session = useLiveQuery(async () => {
-    let s = await db.workoutSessions.where({ date: todayStr, dayId: dayId || '' }).first();
+    let s = await db.workoutSessions.where('date').equals(todayStr).and(s => s.dayId === (dayId || '')).first();
     if (!s) {
       const id = Date.now().toString(36) + Math.random().toString(36).substring(2);
       await db.workoutSessions.add({
@@ -120,7 +120,7 @@ export default function Workout() {
 
 function SetsSection({ exercise, sessionId, onSetComplete }: { exercise: Exercise, sessionId: string, onSetComplete: (rest: number) => void }) {
   const sets = useLiveQuery(() => 
-    db.exerciseSets.where({ sessionId, exerciseId: exercise.id }).sortBy('setNumber')
+    db.exerciseSets.where('sessionId').equals(sessionId).and(s => s.exerciseId === exercise.id).sortBy('setNumber')
   );
 
   // Initialize sets if they don't exist
@@ -210,7 +210,7 @@ function VideoSection({ exercise }: { exercise: Exercise }) {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   
   const videoRecord = useLiveQuery(() => 
-    db.exerciseVideos.where({ exerciseId: exercise.id }).first()
+    db.exerciseVideos.where('exerciseId').equals(exercise.id).first()
   );
 
   useEffect(() => {

@@ -9,15 +9,15 @@ export default function Dashboard() {
   const dateStr = today.toISOString().split('T')[0];
 
   const currentDayPlan = useLiveQuery(() => 
-    db.workoutDays.where({ dayOfWeek }).first()
+    db.workoutDays.where('dayOfWeek').equals(dayOfWeek).first()
   );
 
   const session = useLiveQuery(() =>
-    db.workoutSessions.where({ date: dateStr, dayId: currentDayPlan?.id || '' }).first()
+    db.workoutSessions.where('date').equals(dateStr).and(s => s.dayId === (currentDayPlan?.id || '')).first()
   );
 
   const dailyCheckIn = useLiveQuery(() =>
-    db.dailyCheckIns.where({ date: dateStr }).first()
+    db.dailyCheckIns.where('date').equals(dateStr).first()
   );
 
   const userProfile = useLiveQuery(() => db.userProfile.toCollection().first());
