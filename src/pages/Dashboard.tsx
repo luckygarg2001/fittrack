@@ -71,7 +71,7 @@ export default function Dashboard() {
                  onChange={e => {
                    const val = parseInt(e.target.value) || 0;
                    if (dailyCheckIn) db.dailyCheckIns.update(dailyCheckIn.id!, {steps: val});
-                   else db.dailyCheckIns.add({id: crypto.randomUUID(), date: dateStr, steps: val, sleep: 0, energy: 0});
+                   else db.dailyCheckIns.add({id: Date.now().toString(36) + Math.random().toString(36).substring(2), date: dateStr, steps: val, sleep: 0, energy: 0});
                  }}
                  className="bg-transparent text-2xl font-semibold w-full focus:outline-none" placeholder="0" />
         </div>
@@ -91,7 +91,7 @@ export default function Dashboard() {
                  onChange={e => {
                    const val = parseFloat(e.target.value) || 0;
                    if (dailyCheckIn) db.dailyCheckIns.update(dailyCheckIn.id!, {sleep: val});
-                   else db.dailyCheckIns.add({id: crypto.randomUUID(), date: dateStr, steps: 0, sleep: val, energy: 0});
+                   else db.dailyCheckIns.add({id: Date.now().toString(36) + Math.random().toString(36).substring(2), date: dateStr, steps: 0, sleep: val, energy: 0});
                  }}
                  className="bg-transparent text-2xl font-semibold w-full focus:outline-none" placeholder="0" />
         </div>
@@ -103,7 +103,7 @@ export default function Dashboard() {
                  onChange={e => {
                    const val = parseInt(e.target.value) || 0;
                    if (dailyCheckIn) db.dailyCheckIns.update(dailyCheckIn.id!, {energy: val});
-                   else db.dailyCheckIns.add({id: crypto.randomUUID(), date: dateStr, steps: 0, sleep: 0, energy: val});
+                   else db.dailyCheckIns.add({id: Date.now().toString(36) + Math.random().toString(36).substring(2), date: dateStr, steps: 0, sleep: 0, energy: val});
                  }}
                  className="bg-transparent text-2xl font-semibold w-full focus:outline-none" placeholder="0" />
         </div>

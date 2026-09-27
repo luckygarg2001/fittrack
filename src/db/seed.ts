@@ -133,7 +133,7 @@ export async function seedInitialData() {
 
     for (const ex of day.exercises) {
       await db.exercises.add({
-        id: crypto.randomUUID(),
+        id: Date.now().toString(36) + Math.random().toString(36).substring(2),
         dayId: day.id,
         name: ex.name,
         sets: ex.sets,

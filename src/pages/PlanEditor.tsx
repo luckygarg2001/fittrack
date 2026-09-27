@@ -75,7 +75,7 @@ function DayEditor({ day, isExpanded, onToggle }: { day: WorkoutDay, isExpanded:
           ))}
 
           <button onClick={() => setEditingEx({
-            id: crypto.randomUUID(),
+            id: Date.now().toString(36) + Math.random().toString(36).substring(2),
             dayId: day.id,
             name: 'New Exercise',
             sets: 3,

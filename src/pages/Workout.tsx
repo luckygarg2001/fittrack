@@ -20,7 +20,7 @@ export default function Workout() {
   const session = useLiveQuery(async () => {
     let s = await db.workoutSessions.where({ date: todayStr, dayId: dayId || '' }).first();
     if (!s) {
-      const id = crypto.randomUUID();
+      const id = Date.now().toString(36) + Math.random().toString(36).substring(2);
       await db.workoutSessions.add({
         id,
         dayId: dayId || '',
@@ -129,7 +129,7 @@ function SetsSection({ exercise, sessionId, onSetComplete }: { exercise: Exercis
       const initSets = [];
       for(let i=1; i<=exercise.sets; i++) {
         initSets.push({
-          id: crypto.randomUUID(),
+          id: Date.now().toString(36) + Math.random().toString(36).substring(2),
           sessionId,
           exerciseId: exercise.id,
           setNumber: i,
